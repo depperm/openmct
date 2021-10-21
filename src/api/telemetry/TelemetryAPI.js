@@ -144,6 +144,8 @@ define([
         this.metadataCache = new WeakMap();
         this.formatMapCache = new WeakMap();
         this.valueFormatterCache = new WeakMap();
+
+        this.hasRequestProvider = undefined;
     }
 
     /**
@@ -322,6 +324,17 @@ define([
         const provider = this.findRequestProvider.apply(this, arguments);
         if (!provider) {
             return Promise.reject('No provider found');
+        }
+
+        const hasRequestProvider = Object.hasOwn(provider, 'request');
+        if (this.hasRequestProvider === undefined && !hasRequestProvider) {
+            this.openmct.notifications.alert('Missing historical telemetry provider');
+            console.warn('Missing historical telemetry provider');
+        }
+
+        this.hasRequestProvider = hasRequestProvider;
+        if (!hasRequestProvider) {
+            return Promise.resolve([]);
         }
 
         return provider.request.apply(provider, arguments).catch((rejected) => {
