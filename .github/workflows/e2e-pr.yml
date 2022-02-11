@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Success
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.createComment({
@@ -31,7 +31,7 @@ jobs:
           path: test-results
       - name: Test success
         if: ${{ success() }}
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.createComment({
@@ -42,7 +42,7 @@ jobs:
             })
       - name: Test failure
         if: ${{ failure() }}
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.issues.createComment({
