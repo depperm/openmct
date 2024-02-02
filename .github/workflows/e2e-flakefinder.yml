@@ -44,7 +44,7 @@ jobs:
 
       - name: Remove pr:e2e:flakefinder label (if present)
         if: always()
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           script: |
             const { owner, repo, number } = context.issue;
